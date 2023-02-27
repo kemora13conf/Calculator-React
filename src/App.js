@@ -5,12 +5,18 @@ function App() {
   let [result, setResult] = useState("")
   
   window.onkeyup = e => {
-    console.log(e)
     switch (e.key) {
       case '=':
-        let res = String(eval(result))
-        res = res.includes(".") ? res.slice(0, res.indexOf(".") + 7) : res
-        setResult(res)
+        try{
+          let res = String(eval(result))
+          res = res.includes(".") ? res.slice(0, res.indexOf(".") + 7) : res
+          setResult(res)
+        } catch {
+          setResult("Error")
+        }
+        break;
+      case 'Backspace':
+        setResult(prev => prev.slice(0,prev.length - 1))
         break;
       case '1':
         setResult(prev => prev + e.key)
@@ -75,9 +81,13 @@ function App() {
   }
 
   function handleEqualClick(e){
-    let res = String(eval(result))
-    res = res.includes(".") ? res.slice(0, res.indexOf(".") + 3) : res
-    setResult(res)
+    try{
+      let res = String(eval(result))
+      res = res.includes(".") ? res.slice(0, res.indexOf(".") + 7) : res
+      setResult(res)
+    } catch {
+      setResult("Error")
+    }
   }
 
   return (
